@@ -7,17 +7,24 @@ export const stealingBalls = (maxBalls, warehouseBall) => {
 
   let sumBag = 0;
   let robbersBag = [];
+
+  const lengthRobbersBag = warehouseBall.length < maxBalls ? warehouseBall.length : maxBalls; // длина моего нового массива, ограничиваю её сразу
+
+  for (let i = 0; i < lengthRobbersBag; i++) {
+    robbersBag[i] = 1;
+  }
+
   let sumWarehouseBall = sumItems(warehouseBall);
 
   // распределяю шары по новому массиву
-  for (let i = 0; i < warehouseBall.length; i++) {
+  for (let i = 0; i < lengthRobbersBag; i++) {
     if (sumBag < maxBalls) {
-      robbersBag[i] = Math.floor((warehouseBall[i] / sumWarehouseBall) * maxBalls) || 0;
+      robbersBag[i] = Math.floor(warehouseBall[i] / sumWarehouseBall) * maxBalls || robbersBag[i];
       sumBag = sumBag + robbersBag[i];
     }
   }
 
-  // добавляю недостающие шарики
+  // если шариков не хватает добавляю их на рандомное место
   while (sumBag < maxBalls) {
     const index = generationIndexForArray(robbersBag.length - 1);
     robbersBag[index] += 1;
