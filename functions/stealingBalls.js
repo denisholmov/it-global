@@ -5,17 +5,23 @@ export const stealingBalls = (maxBalls, warehouseBall) => {
         return "грабитель попал на пустой склад. Облом!";
     }
 
+    const newWarehouseBall = [];
+
+    for(let i = 0; i < maxBalls && i < warehouseBall.length; i++){
+        newWarehouseBall.push(warehouseBall[i]);
+    }
+
     let ballsInBag = 0;
-    let robbersBag = [];
-    let sumWarehouseBall = sumItems(warehouseBall);
+    const robbersBag = [];
+    const sumWarehouseBall = sumItems(newWarehouseBall);
     
 
-    for(let i = 0; i<warehouseBall.length; i++){
-        robbersBag[i] = Math.floor(warehouseBall[i]/sumWarehouseBall * maxBalls); 
+    for(let i = 0; i<newWarehouseBall.length; i++){
+        robbersBag[i] = Math.floor(newWarehouseBall[i]/sumWarehouseBall * maxBalls); 
         ballsInBag = ballsInBag + robbersBag[i];
     }
 
-
+    
     
     if(maxBalls!==ballsInBag){
         const index = generationIndexForArray(robbersBag.length-1);
